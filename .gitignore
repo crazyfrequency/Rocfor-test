@@ -143,3 +143,5 @@ dist
 *.key
 *.crt
 /start.bat
+itclub-cicd.crt
+itclub-cicd.key
