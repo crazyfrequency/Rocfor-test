@@ -1,0 +1,116 @@
+Certificate:
+    Data:
+        Version: 3 (0x2)
+        Serial Number:
+            c2:d2:60:9e:e0:d0:a3:41:7e:79:8c:d9:98:2f:05:48
+        Signature Algorithm: sha256WithRSAEncryption
+        Issuer: C=RU, ST=Samara, L=Samara, O=PSUTI, OU=OIPO, CN=linux-ca.ipa.psati.ru/emailAddress=n.kaz@psuti.ru
+        Validity
+            Not Before: Dec 21 09:50:06 2022 GMT
+            Not After : Mar 25 09:50:06 2025 GMT
+        Subject: C=RU, ST=Samara, L=Samara, O=PSUTI-IT-CLUB, OU=OIPO, CN=itclub-cicd.ipa.psati.ru/emailAddress=n.kaz@psuti.ru
+        Subject Public Key Info:
+            Public Key Algorithm: rsaEncryption
+                RSA Public-Key: (2048 bit)
+                Modulus:
+                    00:e3:34:76:38:00:13:67:c1:f6:41:85:4a:07:0a:
+                    13:c5:ba:ce:fe:1e:d3:af:77:19:b3:7a:1f:e8:ad:
+                    4a:66:03:49:80:a2:9b:e3:af:f8:38:36:1a:5a:7d:
+                    c4:1d:10:1e:c2:42:7b:a0:25:bc:ab:1b:a1:4f:8b:
+                    b8:a0:d9:2e:33:24:57:78:9c:e6:92:d0:1d:5a:34:
+                    f5:e8:64:6f:c3:f3:3d:b7:c9:87:00:0e:ea:5b:10:
+                    81:ea:a4:51:37:7b:ce:7a:d6:c8:ed:c6:a0:8d:66:
+                    44:97:b8:4d:88:86:65:75:85:7d:78:fb:a8:64:2e:
+                    f5:9c:e1:c3:d0:b4:4b:93:86:39:12:59:5e:f5:01:
+                    50:32:cd:44:29:8e:bb:05:99:d6:70:e4:f6:1a:e5:
+                    ea:d7:db:27:cf:c8:60:d9:bf:7d:76:de:98:4e:09:
+                    b7:88:26:5d:d3:88:86:65:61:f0:a1:df:a2:ae:d4:
+                    a0:30:ed:1b:de:80:3e:35:6b:ec:92:b0:1c:e1:e8:
+                    85:82:57:89:ca:35:51:c8:85:b9:f6:f1:04:6a:30:
+                    ab:c1:36:d3:30:45:7b:95:79:6f:28:95:6e:ef:97:
+                    ad:dd:91:c3:ba:9b:6f:02:fc:0e:4f:26:2a:7c:97:
+                    ed:8c:49:44:18:eb:72:1b:a8:8e:9a:71:25:c4:58:
+                    bd:a5
+                Exponent: 65537 (0x10001)
+        X509v3 extensions:
+            X509v3 Basic Constraints:
+                CA:FALSE
+            X509v3 Subject Key Identifier:
+                47:07:37:C7:95:6F:BB:3A:1A:B9:16:9C:48:28:7C:5E:06:10:CA:26
+            X509v3 Authority Key Identifier:
+                keyid:69:A5:6B:48:AE:98:85:46:D4:42:F3:0C:C3:98:D8:4B:42:56:AA:BF
+                DirName:/O=IPA.PSATI.RU/CN=Certificate Authority
+                serial:14:22:16:72:9C
+
+            X509v3 Extended Key Usage:
+                TLS Web Server Authentication
+            X509v3 Key Usage:
+                Digital Signature, Key Encipherment
+            X509v3 Subject Alternative Name:
+                DNS:itclub-cicd.ipa.psati.ru, DNS:itclub-cicd
+    Signature Algorithm: sha256WithRSAEncryption
+         7f:eb:20:3f:83:ab:a8:33:cb:37:58:71:8e:5e:27:9a:f5:b0:
+         7c:56:16:62:30:d6:c8:18:ef:aa:40:e0:35:cd:3d:0f:d0:48:
+         bd:90:df:cc:77:a2:f9:ba:5b:df:58:74:ad:66:c8:f7:f2:eb:
+         ee:30:54:f0:4e:4f:7e:70:48:19:36:88:3b:86:ce:36:d7:a9:
+         2b:b4:ad:1e:f8:a6:ff:0b:b6:30:bc:f6:a1:1a:e7:a3:37:fd:
+         b5:b3:b4:45:ef:92:62:b0:05:17:b8:a6:9f:ae:83:3c:a0:97:
+         24:63:c0:31:1f:dc:81:bb:2b:70:ab:07:9c:a2:86:30:96:f0:
+         3f:80:71:3b:2a:67:9e:40:18:9e:9a:92:ae:6f:18:8b:1b:77:
+         14:7e:a0:2c:83:f9:11:37:6d:a4:49:c8:f7:0f:a5:0b:53:aa:
+         f9:40:9a:5f:7c:a8:4a:2c:d5:85:89:b6:db:40:6e:5c:c4:b7:
+         b3:7f:d6:f9:a6:2f:d8:26:f5:0b:29:d7:0c:80:ba:26:03:46:
+         24:87:89:8f:ed:4c:47:36:1e:f0:8e:ff:eb:35:41:26:ae:a6:
+         0d:55:4c:33:e9:f6:6e:9c:3e:b6:7f:95:68:30:95:98:a7:70:
+         34:51:cb:30:29:0a:07:36:4b:9b:fc:3b:f4:7f:8c:9d:dd:5b:
+         79:9e:a1:ba
+-----BEGIN CERTIFICATE-----
+MIIEmTCCA4GgAwIBAgIRAMLSYJ7g0KNBfnmM2ZgvBUgwDQYJKoZIhvcNAQELBQAw
+gY0xCzAJBgNVBAYTAlJVMQ8wDQYDVQQIDAZTYW1hcmExDzANBgNVBAcMBlNhbWFy
+YTEOMAwGA1UECgwFUFNVVEkxDTALBgNVBAsMBE9JUE8xHjAcBgNVBAMMFWxpbnV4
+LWNhLmlwYS5wc2F0aS5ydTEdMBsGCSqGSIb3DQEJARYObi5rYXpAcHN1dGkucnUw
+HhcNMjIxMjIxMDk1MDA2WhcNMjUwMzI1MDk1MDA2WjCBmDELMAkGA1UEBhMCUlUx
+DzANBgNVBAgMBlNhbWFyYTEPMA0GA1UEBwwGU2FtYXJhMRYwFAYDVQQKDA1QU1VU
+SS1JVC1DTFVCMQ0wCwYDVQQLDARPSVBPMSEwHwYDVQQDDBhpdGNsdWItY2ljZC5p
+cGEucHNhdGkucnUxHTAbBgkqhkiG9w0BCQEWDm4ua2F6QHBzdXRpLnJ1MIIBIjAN
+BgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA4zR2OAATZ8H2QYVKBwoTxbrO/h7T
+r3cZs3of6K1KZgNJgKKb46/4ODYaWn3EHRAewkJ7oCW8qxuhT4u4oNkuMyRXeJzm
+ktAdWjT16GRvw/M9t8mHAA7qWxCB6qRRN3vOetbI7cagjWZEl7hNiIZldYV9ePuo
+ZC71nOHD0LRLk4Y5Elle9QFQMs1EKY67BZnWcOT2GuXq19snz8hg2b99dt6YTgm3
+iCZd04iGZWHwod+irtSgMO0b3oA+NWvskrAc4eiFgleJyjVRyIW59vEEajCrwTbT
+MEV7lXlvKJVu75et3ZHDuptvAvwOTyYqfJftjElEGOtyG6iOmnElxFi9pQIDAQAB
+o4HmMIHjMAkGA1UdEwQCMAAwHQYDVR0OBBYEFEcHN8eVb7s6GrkWnEgofF4GEMom
+MGMGA1UdIwRcMFqAFGmla0iumIVG1ELzDMOY2EtCVqq/oTukOTA3MRUwEwYDVQQK
+DAxJUEEuUFNBVEkuUlUxHjAcBgNVBAMMFUNlcnRpZmljYXRlIEF1dGhvcml0eYIF
+FCIWcpwwEwYDVR0lBAwwCgYIKwYBBQUHAwEwCwYDVR0PBAQDAgWgMDAGA1UdEQQp
+MCeCGGl0Y2x1Yi1jaWNkLmlwYS5wc2F0aS5ydYILaXRjbHViLWNpY2QwDQYJKoZI
+hvcNAQELBQADggEBAH/rID+Dq6gzyzdYcY5eJ5r1sHxWFmIw1sgY76pA4DXNPQ/Q
+SL2Q38x3ovm6W99YdK1myPfy6+4wVPBOT35wSBk2iDuGzjbXqSu0rR74pv8LtjC8
+9qEa56M3/bWztEXvkmKwBRe4pp+ugzyglyRjwDEf3IG7K3CrB5yihjCW8D+AcTsq
+Z55AGJ6akq5vGIsbdxR+oCyD+RE3baRJyPcPpQtTqvlAml98qEos1YWJtttAblzE
+t7N/1vmmL9gm9Qsp1wyAuiYDRiSHiY/tTEc2HvCO/+s1QSaupg1VTDPp9m6cPrZ/
+lWgwlZincDRRyzApCgc2S5v8O/R/jJ3dW3meobo=
+-----END CERTIFICATE-----
+-----BEGIN CERTIFICATE-----
+MIID7DCCAtSgAwIBAgIFFCIWcpwwDQYJKoZIhvcNAQELBQAwNzEVMBMGA1UECgwM
+SVBBLlBTQVRJLlJVMR4wHAYDVQQDDBVDZXJ0aWZpY2F0ZSBBdXRob3JpdHkwHhcN
+MjIxMjIwMTM0OTQ1WhcNNDAwODAxMDYwMzM5WjCBjTELMAkGA1UEBhMCUlUxDzAN
+BgNVBAgMBlNhbWFyYTEPMA0GA1UEBwwGU2FtYXJhMQ4wDAYDVQQKDAVQU1VUSTEN
+MAsGA1UECwwET0lQTzEeMBwGA1UEAwwVbGludXgtY2EuaXBhLnBzYXRpLnJ1MR0w
+GwYJKoZIhvcNAQkBFg5uLmthekBwc3V0aS5ydTCCASIwDQYJKoZIhvcNAQEBBQAD
+ggEPADCCAQoCggEBAJvf90hOJPBntOuvasmAzakeB8guEDNCrgB0a4v1JKaSt8tS
+xexIFW6Ue3oFPZ77wpwcL4YQSMsDg80swVMaDizB+i06jgST+TbQBzTTQlB/14t3
+S3ecVTkdWykosoJvz+tqw4Nq4P8Nv+GeYrLFLlOLsKqAU7Qja0O3yyn31V+EsNta
+ZkigCxWMbKdwU47JW8kiT0auhFxMwBUsuZ8Zx0oGa2v2xrTt55083NosXoSx8GCT
+cSfGhi1cQqJKq2YDP268bpwiRBeqzawl/AZeC+37SBDUyV0Xm/4t8ti9/mu7qGtQ
+LN8OWv5wb7JK+SKXUcEjHhGyCG1Bj0XYWRrz8jkCAwEAAaOBpzCBpDAfBgNVHSME
+GDAWgBSPbHb+ze2YayFAmO8Jlq+6CVaoPDASBgNVHRMBAf8ECDAGAQH/AgEAMA4G
+A1UdDwEB/wQEAwIBxjAdBgNVHQ4EFgQUaaVrSK6YhUbUQvMMw5jYS0JWqr8wPgYI
+KwYBBQUHAQEEMjAwMC4GCCsGAQUFBzABhiJodHRwOi8vaXBhLWNhLmlwYS5wc2F0
+aS5ydS9jYS9vY3NwMA0GCSqGSIb3DQEBCwUAA4IBAQCHncD/9o4ePmEZeFNOx5BH
+vCEO1hS0BkCNFEBsi5cTsi41a5sXzkSW0XZU+em0V2C9vP5MeFuDuQ9myF+eDvpK
+fZ493g+4UzBsStvUpj1xaM6u2cFIb9ib477vLS1ldKSW1doMdWhgPcfPJrHXx568
+EomMGD/+GL+u/Io5URFqFWvspHb8Ji1HWyWJc61WZj4c/WSkaj0RleCv+xFedxuA
+xITNkEV0aFsaeGo9WZRV9khi1vRSH51q33cv4AUv0O8AQCBnpuHYF1NI35L/NC9N
+lxUK3xp5pBF9nWvcaNRf05XmH+G1V9qyJjlbYpL/hu9HETLEgDsTrFFMpItySJ6I
+-----END CERTIFICATE-----
