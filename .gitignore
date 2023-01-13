@@ -140,8 +140,8 @@ dist
 
 # configs
 /config.json
-*.key
-*.crt
+**.key
+**.crt
 /start.bat
 itclub-cicd.crt
 itclub-cicd.key
