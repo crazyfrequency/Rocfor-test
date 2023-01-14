@@ -142,6 +142,7 @@ dist
 /config.json
 **.key
 **.crt
+**.yaml
 /start.bat
 itclub-cicd.crt
 itclub-cicd.key
