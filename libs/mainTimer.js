@@ -81,6 +81,7 @@ class mainTimer{
      * @private
      */
     async _interval_1(data){
+        console.debug(data);
         if(data.end!==null)
             if(data.end<Date.now()) return delete this.sends[data.id];
         
