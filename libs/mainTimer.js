@@ -70,7 +70,7 @@ class mainTimer{
             await pool.query("DELETE FROM sends WHERE id=$1",[data.id]).catch((e)=>console.error(e));
             pool.end();
             delete this.sends[data.id];
-        },(data.start-new Date()));
+        },(data.start-Date.now()));
     }
 
     /**
@@ -91,7 +91,7 @@ class mainTimer{
                     if(data.end<Date.now()) return delete this.sends[data.id];
                 await this._send(data).catch(()=>null);
             },data.interval);
-        },(Date.now() - data.start) % data.interval);
+        },(data.start - Date.now()) % data.interval);
     }
 
     /**
