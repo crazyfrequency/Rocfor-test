@@ -78,7 +78,8 @@ module.exports = (app) => {
             pool.end();
             return response.sendStatus(405);
         }
-        let res1 = await pool.query("UPDATE users SET () WHERE id = $1",[request.params.id]).catch((e)=>console.log(e))
+        let res1 = await pool.query("UPDATE users SET () WHERE id = $1",[request.params.id]).catch((e)=>console.log(e));
+        pool.end();
         next();
     })
 

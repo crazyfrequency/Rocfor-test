@@ -10,7 +10,10 @@ const { choose } = require("./methodsBD");
 async function send_fact(bot, bot_settings){
     const pool = new Pool(database);
     let res = await pool.query("SELECT * FROM facts WHERE tosend IS NOT NULL AND sended = false AND bad = false ORDER BY tosend").catch((e)=>console.log(e));
-    if(!res?.rows?.length) return send_fact(bot, bot_settings);
+    if(!res?.rows?.length){
+        await pool.end();
+        return send_fact(bot, bot_settings);
+    }
     let channel = await bot.channels.fetch(bot_settings.default_channel_id).catch(()=>null);
     let embed = new EmbedBuilder().setColor("Purple").setTitle("Случайный факт:")
     .setDescription(res.rows[0].text);

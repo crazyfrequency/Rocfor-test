@@ -19,6 +19,7 @@ module.exports = (app) => {
                 response.statusCode
             ]
             ).catch(()=>null);
+        pool.end();
     }catch(e){console.error(e)}});
     
     app.all("*",async(request, response, next)=>{

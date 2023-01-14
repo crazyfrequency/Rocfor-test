@@ -22,14 +22,23 @@ module.exports = (app) => {
             [request.body.username,request.body.password]
         ).catch(async(e)=>e.errno==-4077?"nc":null);
 
-        if(res=="nc") return response.sendStatus(500);
-        if(!res?.rowCount) return response.sendStatus(401);
+        if(res=="nc"){
+            await pool.end();
+            return response.sendStatus(500);
+        }
+        if(!res?.rowCount){
+            await pool.end();
+            return response.sendStatus(401);
+        }
 
         let key;
         while(true){
             key = await get_random_key();
             let res1 = await pool.query(`SELECT * FROM sessions WHERE secretkey = '${key}'`).catch(()=>null)
-            if(!res1) return response.sendStatus(500);
+            if(!res1){
+                await pool.end();
+                return response.sendStatus(500);
+            }
             if(!res1?.rowCount) break;
         }
 
@@ -37,6 +46,7 @@ module.exports = (app) => {
             "INSERT INTO sessions (secretkey, user_id, useragent, lastlogin) VALUES ($1, $2, $3, NOW())",
             [key,res?.rows[0]?.id,request.headers["user-agent"]]
         ).catch(async(e)=>e.errno==-4077?"nc":null);
+        pool.end();
         if(res2=="nc") return response.sendStatus(500);
         response.cookie("key",key,{
             maxAge:1209600000,
@@ -44,7 +54,6 @@ module.exports = (app) => {
             path:"/api"
         });
         response.status(200).json({permissions:res?.rows[0]?.permissions});
-        pool.end();
     });
 
     app.post("/api/logout",async(request, response)=>{
@@ -66,10 +75,17 @@ module.exports = (app) => {
             [request.cookies.key]
         ).catch(async(e)=>e.errno==-4077?"nc":null);
         
-        if(res=="nc") return response.sendStatus(500);
-        if(!res?.rowCount) return response.sendStatus(401);
+        if(res=="nc"){
+            await pool.end();
+            return response.sendStatus(500);
+        }
+        if(!res?.rowCount){
+            await pool.end();
+            return response.sendStatus(401);
+        }
         if(Date.now()-res.rows[0].created_on>1209600000){
             pool.query("DELETE FROM sessions WHERE (NOW()-lastlogin)>'14days'").catch((e)=>console.error(e));
+            pool.end();
             return response.sendStatus(401);
         }
         pool.query("UPDATE sessions SET lastlogin=NOW(), useragent=$1 WHERE secretkey = $2",
@@ -80,6 +96,6 @@ module.exports = (app) => {
             path:"/api"
         })
         request.session = res.rows[0];
-        next();pool.end();
+        pool.end();next();
     });
 }
