@@ -61,13 +61,35 @@ module.exports = (app, mt) => {
     app.patch("/api/send/:id/enable",async(request, response, next)=>{
         if(!(request.session?.permissions&((1<<3)|(1<<1))))
             return response.sendStatus(403);
-            
+        let res = null;
+        if(request.session?.permissions&(1<<3))
+            res = await mt.enable(request.params.id).catch((e)=>console.error(e))
+        else if(request.session?.permissions&(1<<1)){
+            if((request.session?.permissions&(1<<7))&&(request.session?.permissions&(1<<8)))
+                res = await mt.enable(request.params.id).catch((e)=>console.error(e))
+            else if(test_channels(await mt.get(request.params.id), request.session))
+                res = await mt.enable(request.params.id).catch((e)=>console.error(e))
+            else return response.sendStatus(403);
+        }else return response.sendStatus(403);
+        if(!res) return response.sendStatus(500);
+        response.sendStatus(200);
     });
 
     app.patch("/api/send/:id/disable",async(request, response, next)=>{
         if(!(request.session?.permissions&((1<<3)|(1<<1))))
             return response.sendStatus(403);
-            
+        let res = null;
+        if(request.session?.permissions&(1<<3))
+            res = await mt.disable(request.params.id).catch((e)=>console.error(e))
+        else if(request.session?.permissions&(1<<1)){
+            if((request.session?.permissions&(1<<7))&&(request.session?.permissions&(1<<8)))
+                res = await mt.disable(request.params.id).catch((e)=>console.error(e))
+            else if(test_channels(await mt.get(request.params.id), request.session))
+                res = await mt.disable(request.params.id).catch((e)=>console.error(e))
+            else return response.sendStatus(403);
+        }else return response.sendStatus(403);
+        if(!res) return response.sendStatus(500);
+        response.sendStatus(200); 
     });
     
 }

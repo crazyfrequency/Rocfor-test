@@ -104,7 +104,7 @@ class mainTimer{
      */
     async _interval_2(data){
 
-        let date = get_date(data.time)
+        let date = get_date(data.time);
         
 
         this.sends[data.id].interval = setTimeout(async()=>{
@@ -258,7 +258,7 @@ class mainTimer{
         const pool = new Pool(database);
         let res = await pool.query("SELECT * FROM sends WHERE id = $1",[id]);
         pool.end();
-        if(res?.rows?.length) return null;
+        if(!res?.rows?.length) return null;
         return res.rows[0];
     }
 
