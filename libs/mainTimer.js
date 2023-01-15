@@ -28,7 +28,7 @@ class mainTimer{
         if(!res?.rows?.length) return this.started = true;
         for(let i of res.rows){
             if(typeof i?.interval == "object")
-                i.interval = (((i.interval.hours||0)*60+(i.interval.minutes||0))*60+(i.interval.seconds||0))*1000+(i.interval.milliseconds||0);
+                i.interval = (((i.interval?.hours||0)*60+(i.interval?.minutes||0))*60+(i.interval?.seconds||0))*1000+(i.interval?.milliseconds||0);
             this._create_interval(i).catch((e)=>console.error(e));
         }
         this.started = true;
