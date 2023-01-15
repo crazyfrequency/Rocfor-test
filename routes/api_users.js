@@ -11,6 +11,26 @@ module.exports = (app) => {
         next();
     });
 
+    app.patch("/api/users/me", async(request, response, next)=>{
+        if(typeof request.body?.password != "string")
+            return response.sendStatus(400);
+        if(typeof request.body?.new_password != "string")
+            return response.sendStatus(400);
+        if(!request.body?.new_password.includes(" "))
+            return response.sendStatus(418);
+        if(request.body?.password != request.session?.password)
+            return response.sendStatus(403);
+        const pool = new Pool(database);
+        let res = await pool.query(
+            "UPDATE users SET (password = $1) WHERE id = $2 RETURNING *",
+            [request.body?.password, request.session?.id]
+            ).catch((e)=>console.log(e));
+        pool.end();
+        if(!res?.rows?.length) return response.sendStatus(500);
+        response.sendStatus(200);
+        next();
+    });
+
     app.get("/api/users", async(request, response, next)=>{
         if(!(request.session?.permissions&((1<<3)|(1<<5)|(1<<6)))) return response.sendStatus(403);
         const pool = new Pool(database);
