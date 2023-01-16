@@ -93,7 +93,7 @@ module.exports = (client, bot, bot_settings, mt) => {
         }, millis);
         const pool = new Pool(database);
         while(true){
-            let res = await pool.connect().catch(()=>{
+            let res = await pool.query("SELECT * FROM users").catch(()=>{
                 console.error("нет подключения к бд");
                 return "er"}
                 );
@@ -105,7 +105,7 @@ module.exports = (client, bot, bot_settings, mt) => {
             let res1 = await pool.query("SELECT * FROM facts WHERE tosend IS NULL AND sended = false AND bad = false").catch(()=>null);
             if(!res1?.rows?.length){
                 console.error("Ошибка фактов!");
-                return pool.end();
+                return;
             }
             if(res1.rows.length<need_count)
                 need_count = res1.rows.length;
@@ -127,7 +127,6 @@ module.exports = (client, bot, bot_settings, mt) => {
         }
         console.log("Подключено к бд");
         await mt.start();
-        pool.end();
     });
 
     client.updates.start();

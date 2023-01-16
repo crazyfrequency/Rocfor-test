@@ -2,6 +2,7 @@ const express = require("express");
 const {database} = require("../config.json");
 const {Pool} = require("pg");
 const {get_random_key} = require("../libs/methodsBD");
+const pool = new Pool(database);
 /**
  * 
  * @param {express.Express} app 
@@ -16,29 +17,23 @@ module.exports = (app) => {
             return response.sendStatus(400);
         if(request.body.username?.includes(" ")||request.body.password?.includes(" "))
             return response.sendStatus(418);
-        const pool = new Pool(database);
         let res = await pool.query(
             "SELECT * FROM users WHERE username = $1 AND password = $2",
             [request.body.username,request.body.password]
         ).catch(async(e)=>e.errno==-4077?"nc":null);
 
-        if(res=="nc"){
-            await pool.end();
+        if(res=="nc")
             return response.sendStatus(500);
-        }
-        if(!res?.rowCount){
-            await pool.end();
+        if(!res?.rowCount)
             return response.sendStatus(401);
-        }
+        
 
         let key;
         while(true){
             key = await get_random_key();
             let res1 = await pool.query(`SELECT * FROM sessions WHERE secretkey = '${key}'`).catch(()=>null)
-            if(!res1){
-                await pool.end();
+            if(!res1)
                 return response.sendStatus(500);
-            }
             if(!res1?.rowCount) break;
         }
 
@@ -46,7 +41,6 @@ module.exports = (app) => {
             "INSERT INTO sessions (secretkey, user_id, useragent, lastlogin) VALUES ($1, $2, $3, NOW())",
             [key,res?.rows[0]?.id,request.headers["user-agent"]]
         ).catch(async(e)=>e.errno==-4077?"nc":null);
-        pool.end();
         if(res2=="nc") return response.sendStatus(500);
         response.cookie("key",key,{
             maxAge:1209600000,
@@ -57,35 +51,27 @@ module.exports = (app) => {
     });
 
     app.post("/api/logout",async(request, response)=>{
-        const pool = new Pool(database);
         response.clearCookie("key",{path:"/api"});
         await pool.query(
             "DELETE FROM sessions WHERE secretkey = $1",
             [request.cookies.key]
         ).catch(()=>null);
         response.sendStatus(200);
-        pool.end();
     });
     
     app.use("/api/*",async (request, response, next)=>{
-        const pool = new Pool(database);
         if(!request.cookies.key) return response.sendStatus(401);
         let res = await pool.query(
             "SELECT * FROM sessions INNER JOIN users ON user_id = id WHERE secretkey = $1",
             [request.cookies.key]
         ).catch(async(e)=>e.errno==-4077?"nc":null);
         
-        if(res=="nc"){
-            await pool.end();
+        if(res=="nc")
             return response.sendStatus(500);
-        }
-        if(!res?.rowCount){
-            await pool.end();
+        if(!res?.rowCount)
             return response.sendStatus(401);
-        }
         if(Date.now()-res.rows[0].created_on>1209600000){
             pool.query("DELETE FROM sessions WHERE (NOW()-lastlogin)>'14days'").catch((e)=>console.error(e));
-            pool.end();
             return response.sendStatus(401);
         }
         pool.query("UPDATE sessions SET lastlogin=NOW(), useragent=$1 WHERE secretkey = $2",
@@ -96,6 +82,6 @@ module.exports = (app) => {
             path:"/api"
         })
         request.session = res.rows[0];
-        pool.end();next();
+        next();
     });
 }

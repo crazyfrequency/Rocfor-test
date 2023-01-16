@@ -1,6 +1,7 @@
 const express = require("express");
 const {database} = require("../config.json");
 const {Pool} = require("pg");
+const pool = new Pool(database);
 /**
  * 
  * @param {express.Express} app 
@@ -8,7 +9,6 @@ const {Pool} = require("pg");
 module.exports = (app) => {
     app.use("/api/*",async(request, response, next)=>{try{
         if(!response.headersSent) return response.sendStatus(404);
-        let pool = new Pool(database);
         await pool.query(
             "INSERT INTO audit_log(user_id, user_name, url, ip, headers, operation_date, body, status_code)"+
             " VALUES ($1, $2, $3, $4, $5, NOW(), $6, $7)",
@@ -19,7 +19,6 @@ module.exports = (app) => {
                 response.statusCode
             ]
             ).catch(()=>null);
-        pool.end();
     }catch(e){console.error(e)}});
     
     app.all("*",async(request, response, next)=>{

@@ -3,7 +3,7 @@ const {Pool} = require("pg");
 const { Client } = require("discord.js");
 const { VK } = require("vk-io");
 const { send_to_channels, get_date } = require("./methodsBD");
-
+const pool = new Pool(database);
 class mainTimer{
     /**
      * 
@@ -22,9 +22,7 @@ class mainTimer{
     }
 
     async start(){
-        const pool = new Pool(database);
         let res = await pool.query("SELECT * FROM sends");
-        pool.end();
         if(!res?.rows?.length) return this.started = true;
         for(let i of res.rows){
             if(typeof i?.interval == "object")
@@ -68,9 +66,7 @@ class mainTimer{
     async _interval_0(data){
         this.sends[data.id].interval = setTimeout(async()=>{
             await this._send(data).catch(()=>null);
-            const pool = new Pool(database);
             await pool.query("DELETE FROM sends WHERE id=$1",[data.id]).catch((e)=>console.error(e));
-            pool.end();
             delete this.sends[data.id];
         },(data.start-Date.now()));
     }
@@ -145,7 +141,6 @@ class mainTimer{
         if(!this.started) return;
         if(!data.color) data.color = "#0000ff";
         if(!data.start&&data.type==1) data.start = Date.now();
-        const pool = new Pool(database);
         let res = await pool.query(
             "INSERT INTO sends (title, \"text\", color, images, \"type\", \"start\", \"interval\", \"end\", \"time\", enabled, channels_vk, channels_discord) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12) RETURNING *",
             [
@@ -161,7 +156,6 @@ class mainTimer{
                 data.channels_discord?.length?data.channels_discord:null
             ]
             ).catch((e)=>console.error(e));
-        pool.end();
         if(!res?.rows?.length) return null;
         if(!res?.rows[0]?.id) return null;
         data.id = res.rows[0]?.id;
@@ -177,12 +171,8 @@ class mainTimer{
      */
     async edit(id, data){//не доработано
         if(!this.started) return;
-        const pool = new Pool(database);
         let res = await pool.query("SELECT * FROM sends WHERE id = $1",[id]).catch(()=>null);
-        if(!res?.rows?.length){
-            pool.end();
-            return null;
-        }
+        if(!res?.rows?.length) return null;
         clearInterval(this.sends[id]?.interval);clearTimeout(this.sends[id]?.interval);
         delete this.sends[id];
 
@@ -202,7 +192,6 @@ class mainTimer{
                 id
             ]
             ).catch(()=>null);
-        pool.end();
         if(!res1?.rows?.length) return null;
         if(!res1?.rows[0]?.id) return null;
         data.id = res1.rows[0]?.id;
@@ -213,35 +202,27 @@ class mainTimer{
 
     async delete(id){
         if(!this.started) return;
-        const pool = new Pool(database);
         await pool.query("DELETE FROM sends WHERE id = $1 RETURNING *",[id]).catch(()=>null);
-        pool.end();
         clearInterval(this.sends[id]?.interval);clearTimeout(this.sends[id]?.interval);
         delete this.sends[id];
     }
 
     async disable(id){
         if(!this.started) return;
-        const pool = new Pool(database);
         let res = await pool.query("UPDATE sends SET enabled = false WHERE id = $1 RETURNING *", [id]).catch(()=>null);
-        pool.end();
         clearInterval(this.sends[id]?.interval);clearTimeout(this.sends[id]?.interval);
         delete this.sends[id];
     }
 
     async enable(id){
         if(!this.started) return;
-        const pool = new Pool(database);
         let res = await pool.query("UPDATE sends SET enabled = true WHERE id = $1 RETURNING *", [id]).catch(()=>null);
-        pool.end();
         if(res?.rows?.length) return null;
         this._create_interval(res.rows[0]);
     }
 
     async get_all(){
-        const pool = new Pool(database);
         let res = await pool.query("SELECT * FROM sends");
-        pool.end();
         if(!res?.rows) return null;
         for(let i of res.rows){
             if(!(i.id in this.sends)&&i.enabled) i.bad = true;
@@ -255,9 +236,7 @@ class mainTimer{
     }
 
     async get(id){
-        const pool = new Pool(database);
         let res = await pool.query("SELECT * FROM sends WHERE id = $1",[id]);
-        pool.end();
         if(!res?.rows?.length) return null;
         return res.rows[0];
     }

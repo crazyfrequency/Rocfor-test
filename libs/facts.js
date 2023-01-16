@@ -2,16 +2,15 @@ const { Client, EmbedBuilder } = require("discord.js");
 const {database} = require("../config.json");
 const {Pool} = require("pg");
 const { choose } = require("./methodsBD");
+const pool = new Pool(database);
 /**
  * 
  * @param {Client} bot 
  * @param {{vk_name:String,vk_image_url:String,default_channel_id:String,activity:import("discord.js").PresenceData}} bot_settings 
  */
 async function send_fact(bot, bot_settings){
-    const pool = new Pool(database);
     let res = await pool.query("SELECT * FROM facts WHERE tosend IS NOT NULL AND sended = false AND bad = false ORDER BY tosend").catch((e)=>console.log(e));
     if(!res?.rows?.length){
-        await pool.end();
         return send_fact(bot, bot_settings);
     }
     let channel = await bot.channels.fetch(bot_settings.default_channel_id).catch(()=>null);
@@ -26,7 +25,7 @@ async function send_fact(bot, bot_settings){
         let res1 = await pool.query("SELECT * FROM facts WHERE tosend IS NULL AND sended = false AND bad = false").catch(()=>null);
         if(!res1?.rows?.length){
             console.error("Ошибка фактов!");
-            return pool.end();
+            return;
         }
         if(res1.rows.length<need_count)
             need_count = res1.rows.length;
@@ -46,7 +45,6 @@ async function send_fact(bot, bot_settings){
             await pool.query("UPDATE facts SET tosend=$1 WHERE id=$2",[++num,i.id]).catch((e)=>console.error(e));
         }
     }
-    pool.end();
 }
 
 module.exports = {send_fact}
