@@ -9,8 +9,7 @@ const fs = require("fs");
 const fileUpload = require('express-fileupload');
 const {Pool} = require("pg");
 const helmet = require('helmet');
-const { vk_token_group, vk_token, dc_token, site, database} = require('./config.json');
-const vk_group = new VK({token: vk_token_group});
+const { vk_token, dc_token, site, database} = require('./config.json');
 const vk = new VK({token: vk_token});
 const {Client, GatewayIntentBits, Message, EmbedBuilder,ActionRowBuilder,ButtonBuilder, Partials} = require('discord.js');
 const {get_messages_discord,get_messages_vk,get_guilds_discord,get_channels_discord,get_channels_vk} = require("./libs/getMessages");
@@ -48,7 +47,7 @@ require("./routes/api_users")(app);
 
 require("./routes/api_last")(app);
 
-require("./libs/eventlistner")(vk_group, bot, bot_settings, mt);
+require("./libs/eventlistner")(vk, bot, bot_settings, mt);
 
 bot.login(dc_token);
 

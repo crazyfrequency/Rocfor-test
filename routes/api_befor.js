@@ -70,7 +70,7 @@ module.exports = (app) => {
             return response.sendStatus(500);
         if(!res?.rowCount)
             return response.sendStatus(401);
-        if(Date.now()-res.rows[0].created_on>1209600000){
+        if(Date.now()-res.rows[0].lastlogin>1209600000){
             pool.query("DELETE FROM sessions WHERE (NOW()-lastlogin)>'14days'").catch((e)=>console.error(e));
             return response.sendStatus(401);
         }
