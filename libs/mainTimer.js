@@ -212,6 +212,7 @@ class mainTimer{
         let res = await pool.query("UPDATE sends SET enabled = false WHERE id = $1 RETURNING *", [id]).catch(()=>null);
         clearInterval(this.sends[id]?.interval);clearTimeout(this.sends[id]?.interval);
         delete this.sends[id];
+        return true;
     }
 
     async enable(id){
@@ -219,13 +220,14 @@ class mainTimer{
         let res = await pool.query("UPDATE sends SET enabled = true WHERE id = $1 RETURNING *", [id]).catch(()=>null);
         if(res?.rows?.length) return null;
         this._create_interval(res.rows[0]);
+        return true;
     }
 
     async get_all(){
         let res = await pool.query("SELECT * FROM sends");
         if(!res?.rows) return null;
         for(let i of res.rows){
-            if(!(i.id in this.sends)&&i.enabled) i.bad = true;
+            if((this.sends.findIndex((v)=>v?.data?.id==i?.id)==-1)&&i.enabled) i.bad = true;
             delete i.start;delete i.interval;delete i.end;
             delete i.time;
             if(i.images) i.images = i.images[0];
