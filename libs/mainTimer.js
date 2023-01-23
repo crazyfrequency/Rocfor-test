@@ -227,7 +227,7 @@ class mainTimer{
         let res = await pool.query("SELECT * FROM sends");
         if(!res?.rows) return null;
         for(let i of res.rows){
-            if((this.sends.findIndex((v)=>v?.data?.id==i?.id)==-1)&&i.enabled) i.bad = true;
+            if(!(i.id in this.sends)&&i.enabled) i.bad = true;
             delete i.start;delete i.interval;delete i.end;
             delete i.time;
             if(i.images) i.images = i.images[0];
