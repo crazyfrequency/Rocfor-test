@@ -218,7 +218,7 @@ class mainTimer{
     async enable(id){
         if(!this.started) return;
         let res = await pool.query("UPDATE sends SET enabled = true WHERE id = $1 RETURNING *", [id]).catch(()=>null);
-        if(res?.rows?.length) return null;
+        if(!res?.rows?.length) return null;
         res.rows[0].enabled = true;
         this._create_interval(res.rows[0]);
         return true;
