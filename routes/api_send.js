@@ -72,7 +72,7 @@ module.exports = (app, mt) => {
             else return response.sendStatus(403);
         }else return response.sendStatus(403);
         if(!res) return response.sendStatus(500);
-        response.sendStatus(200);
+        response.sendStatus(201);next();
     });
 
     app.patch("/api/send/:id/disable",async(request, response, next)=>{
@@ -89,7 +89,7 @@ module.exports = (app, mt) => {
             else return response.sendStatus(403);
         }else return response.sendStatus(403);
         if(!res) return response.sendStatus(500);
-        response.sendStatus(200); 
+        response.sendStatus(201);next();
     });
     
 }
