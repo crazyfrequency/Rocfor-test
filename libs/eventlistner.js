@@ -94,7 +94,6 @@ module.exports = (client, bot, bot_settings, mt) => {
         const pool = new Pool(database);
         while(true){
             let res = await pool.query("SELECT * FROM users").catch(()=>{
-                console.error("нет подключения к бд");
                 return "er"}
                 );
             if(res!="er") break;

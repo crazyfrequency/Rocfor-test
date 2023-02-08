@@ -8,9 +8,6 @@ const pool = new Pool(database);
  * @param {express.Express} app 
  */
 module.exports = (app) => {
-    app.get("/main/*",async(request, response, next)=>{
-        response.sendFile("C:/Users/diefi/Desktop/site1/site/pages/main_copy.html")
-    });
     
     app.post("/api/login",async(request, response)=>{
         if(typeof request.body.username != "string" || typeof request.body.password != "string")
@@ -72,6 +69,7 @@ module.exports = (app) => {
             return response.sendStatus(401);
         if(Date.now()-res.rows[0].lastlogin>1209600000){
             pool.query("DELETE FROM sessions WHERE (NOW()-lastlogin)>'14days'").catch((e)=>console.error(e));
+            response.clearCookie("key",{path:"/api"});
             return response.sendStatus(401);
         }
         pool.query("UPDATE sessions SET lastlogin=NOW(), useragent=$1 WHERE secretkey = $2",

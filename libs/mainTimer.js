@@ -102,7 +102,7 @@ class mainTimer{
 
         let date = get_date(data.time);
         
-
+        if(typeof date!="number") return;
         this.sends[data.id].interval = setTimeout(async()=>{
             if(!this.sends[data.id]) return;
             await this._send(data).catch(()=>null);

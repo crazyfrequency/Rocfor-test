@@ -71,7 +71,7 @@ async function send_to_channels(vk, data){try{
 			let files = [];
 			if(data.images?.length)
 			for(let j of data.images){
-				files.push(await vk.upload.messagePhoto({
+				files.push(await vk.upload.messageDocument({
 					source:{
 						values: [{value:j.replace("attachment://","../downloads/")}]
 					},
